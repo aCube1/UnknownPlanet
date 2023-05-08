@@ -20,6 +20,8 @@ namespace game {
 			[[nodiscard]] bool isRunning() const { return m_running; }
 
 		private:
+			void createWindow(int width, int height);
+
 			sf::RenderWindow m_window;
 			sf::View m_camera;
 			sf::Event m_event;
