@@ -1,30 +1,29 @@
 #include "Engine.hpp"
 
+#include "ResourceManager.hpp"
+
 #include <cstdint>
 
 // Default view size.
-static const auto SCREEN_WIDTH { 940 };
-static const auto SCREEN_HEIGHT { 460 };
+static const auto SCREEN_WIDTH { 960 };
+static const auto SCREEN_HEIGHT { 540 };
 
 namespace game {
-	Engine::Engine(int width, int height) {
+	Engine::Engine(int width, int height)
+		: m_camera(sf::FloatRect(0.0F, 0.0F, SCREEN_WIDTH, SCREEN_HEIGHT)) {
 		// NOTE: The window is not resizeable.
 		uint32_t window_style { sf::Style::Close | sf::Style::Titlebar };
 
-		m_camera = sf::View();
-		m_camera.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT));
-		m_camera.setCenter(0, 0);
-
 		m_window.create(sf::VideoMode(width, height), "Unknown Planet", window_style);
+		m_window.setPosition(sf::Vector2i(0, 0)); // NOTE: Window position is always 0x0.
 		m_window.setView(m_camera);
 		m_window.setVerticalSyncEnabled(true); // TODO: Make vsync optional.
 
-		m_running = true;
+		// TEST: Remove later
+		m_debug_text.setFont(ResourceManager::getFont("andybold"));
+		m_debug_text.setPosition(0.0F, 0.0F);
 
-		// TEST: Remove later.
-		m_rect.setSize(sf::Vector2f(64.0F, 64.0F));
-		m_rect.setOutlineColor(sf::Color::Red);
-		m_rect.setOutlineThickness(5);
+		m_running = true;
 	}
 
 	void Engine::handleEvents() {
@@ -37,12 +36,12 @@ namespace game {
 	}
 
 	void Engine::update(float dt) {
-		(void)dt;
+		m_debug_text.setString("DeltaTime: " + std::to_string(dt)); // TEST: Remove later
 	}
 
 	void Engine::render() {
 		m_window.clear();
-		m_window.draw(m_rect);
+		m_window.draw(m_debug_text); // TEST: Remove later
 		m_window.display();
 	}
 } // namespace game

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace game {
@@ -23,7 +24,7 @@ namespace game {
 			sf::View m_camera;
 			sf::Event m_event;
 
-			sf::RectangleShape m_rect {}; // TEST: Remove later.
+			sf::Text m_debug_text; // TEST: Remove later
 
 			bool m_running {};
 	};

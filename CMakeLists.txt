@@ -19,6 +19,7 @@ target_sources(
 	PRIVATE
 		src/main.cpp
 		src/Engine.cpp
+		src/ResourceManager.cpp
 )
 
 target_include_directories(

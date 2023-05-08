@@ -1,13 +1,17 @@
 #include "Engine.hpp"
+#include "ResourceManager.hpp"
 #include "spdlog/spdlog.h"
 
 #include <cstdlib>
 #include <exception>
 
-static const auto WINDOW_WIDTH { 940 };
-static const auto WINDOW_HEIGHT { 460 };
+static const auto WINDOW_WIDTH { 960 };
+static const auto WINDOW_HEIGHT { 540 };
 
 static void runEngine() {
+	// NOTE: Load resource dynamically in runtime.
+	game::ResourceManager::loadFont("andybold", "assets/fonts/andybold.ttf");
+
 	auto engine { game::Engine(WINDOW_WIDTH, WINDOW_HEIGHT) };
 	sf::Clock clock {};
 
