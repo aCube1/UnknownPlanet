@@ -8,10 +8,13 @@
 static const auto WINDOW_WIDTH { 960 };
 static const auto WINDOW_HEIGHT { 540 };
 
-static void runEngine() {
-	// NOTE: Load resource dynamically in runtime.
-	game::ResourceManager::loadFont("andybold", "assets/fonts/andybold.ttf");
+static void loadResources() {
+	using game::ResourceManager;
 
+	ResourceManager::loadFont("andybold", "assets/fonts/andybold.ttf");
+}
+
+static void runEngine() {
 	auto engine { game::Engine(WINDOW_WIDTH, WINDOW_HEIGHT) };
 	sf::Clock clock {};
 
@@ -29,6 +32,7 @@ int main(int argc, char *argv[]) {
 	(void)argv;
 
 	try {
+		loadResources();
 		runEngine();
 	} catch (const std::exception& e) {
 		spdlog::error("{}", e.what());

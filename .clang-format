@@ -30,7 +30,7 @@ BreakConstructorInitializers: BeforeComma
 
 EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
-AccessModifierOffset: 1
+# AccessModifierOffset: 0
 
 IndentAccessModifiers: true
 IndentPPDirectives: AfterHash

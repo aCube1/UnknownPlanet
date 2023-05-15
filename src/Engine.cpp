@@ -2,6 +2,7 @@
 
 #include "ResourceManager.hpp"
 
+#include <SFML/Graphics/Texture.hpp>
 #include <cstdint>
 
 // Default view size.
@@ -12,10 +13,6 @@ namespace game {
 	Engine::Engine(int width, int height)
 		: m_camera(sf::FloatRect(0.0F, 0.0F, SCREEN_WIDTH, SCREEN_HEIGHT)) {
 		createWindow(width, height);
-
-		// TEST: Remove later
-		m_debug_text.setFont(ResourceManager::getFont("andybold"));
-		m_debug_text.setPosition(0.0F, 0.0F);
 
 		m_running = true;
 	}
@@ -30,12 +27,11 @@ namespace game {
 	}
 
 	void Engine::update(float dt) {
-		m_debug_text.setString("DeltaTime: " + std::to_string(dt)); // TEST: Remove later
+		(void)dt;
 	}
 
 	void Engine::render() {
 		m_window.clear();
-		m_window.draw(m_debug_text); // TEST: Remove later
 		m_window.display();
 	}
 
@@ -48,7 +44,7 @@ namespace game {
 		m_window.setView(m_camera);
 		m_window.setVerticalSyncEnabled(true); // TODO: Make vsync optional.
 
-		// TODO: Improve icon loading.
+		// Load icon texture and send pixels to the window.
 		auto icon { ResourceManager::loadTexture("icon", "icon.png").copyToImage() };
 		auto icon_size { icon.getSize() };
 		m_window.setIcon(icon_size.x, icon_size.y, icon.getPixelsPtr());

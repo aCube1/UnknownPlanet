@@ -1,5 +1,8 @@
 #include "ResourceManager.hpp"
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
 namespace game {
 	std::unordered_map<std::string, sf::Font> ResourceManager::m_fonts {};
 	std::unordered_map<std::string, sf::Texture> ResourceManager::m_textures {};
