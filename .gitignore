@@ -1,7 +1,3 @@
 # Directiories
 build/
 .cache/
-
-# MacOS Cache
-.DS_Store/
-

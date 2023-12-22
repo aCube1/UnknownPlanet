@@ -1,10 +1,11 @@
 BasedOnStyle: LLVM
 Language: Cpp
-Standard: c++17
+Standard: c++20
 IndentWidth: 4
 TabWidth: 4
+AccessModifierOffset: -4
 ColumnLimit: 90
-UseTab: Always
+UseTab: AlignWithSpaces
 UseCRLF: false
 #ContinuationIndentWidth: 4
 
@@ -30,9 +31,8 @@ BreakConstructorInitializers: BeforeComma
 
 EmptyLineBeforeAccessModifier: LogicalBlock
 FixNamespaceComments: true
-# AccessModifierOffset: 0
 
-IndentAccessModifiers: true
+IndentAccessModifiers: false
 IndentPPDirectives: AfterHash
 IndentWrappedFunctionNames: true
 NamespaceIndentation: All
