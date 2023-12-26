@@ -17,7 +17,7 @@ function(set_libraries target)
 	target_link_libraries(
 		${target}
 		PRIVATE
-			spdlog::spdlog
 			sfml-window sfml-graphics sfml-audio sfml-system
-	)
+			spdlog::spdlog
+)
 endfunction()
