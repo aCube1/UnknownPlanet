@@ -4,20 +4,15 @@ function(set_libraries target)
 	set(VENDOR_DIR ${CMAKE_SOURCE_DIR}/vendor)
 
 	find_package(
-		SFML 2.6.1
+		SDL2 2.28 CONFIG
 		COMPONENTS
-			window graphics audio system
+			SDL2
 		REQUIRED
 	)
-
-	option(SPDLOG_USE_STD_FORMAT ON)
-	option(SPDLOG_ENABLE_PCH ON)
-	add_subdirectory(${VENDOR_DIR}/spdlog)
 
 	target_link_libraries(
 		${target}
 		PRIVATE
-			sfml-window sfml-graphics sfml-audio sfml-system
-			spdlog::spdlog
+			SDL2::SDL2
 )
 endfunction()

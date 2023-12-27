@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 project(
 	uplanet
 	VERSION 0.1.0
-	LANGUAGES CXX
+	LANGUAGES C
 )
 
 include(cmake/base.cmake)
@@ -14,13 +14,19 @@ add_executable(${PROJECT_NAME})
 target_compile_features(
 	${PROJECT_NAME}
 	PRIVATE
-		cxx_std_20
+		c_std_17
 )
 
 target_sources(
 	${PROJECT_NAME}
 	PRIVATE
-		src/main.cpp
+		include/common.h
+		include/log.h
+		include/types.h
+
+		src/common.c
+		src/log.c
+		src/main.c
 )
 
 target_include_directories(
