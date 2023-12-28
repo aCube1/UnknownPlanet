@@ -15,27 +15,34 @@ Window *window_create(const char *title, const VideoMode *mode) {
 	}
 
 	Window *window = xcalloc(1, sizeof(Window));
-	window->size.width = mode != NULL ? mode->width : 0;
-	window->size.height = mode != NULL ? mode->height : 0;
-	window->flags = mode != NULL ? mode->flags : 0;
+
+	memset(&window->time, 0, sizeof(window->time));
+	if (mode != NULL) {
+		window->mode = *mode;
+	}
+
+	window->mode.flags |= SDL_WINDOW_OPENGL;
+	window->mode.flags |= SDL_WINDOW_SHOWN;
+	window->mode.flags |= SDL_WINDOW_INPUT_FOCUS;
+	window->mode.flags |= SDL_WINDOW_MOUSE_FOCUS;
+	window->mode.flags |= SDL_WINDOW_MOUSE_CAPTURE;
 
 	window->handler = SDL_CreateWindow(
-		title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window->size.width,
-		window->size.height, window->flags
+		title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window->mode.width,
+		window->mode.height, window->mode.flags
 	);
 	if (window->handler == NULL) {
 		log_error("[SDL2] - Unable to create Window: %s", SDL_GetError());
 		goto ERROR;
 	}
 
-	window->renderer = SDL_CreateRenderer(
-		window->handler, -1, SDL_RENDERER_TARGETTEXTURE
-	);
-	if (window->handler == NULL) {
+	window->renderer = SDL_CreateRenderer(window->handler, -1, SDL_RENDERER_ACCELERATED);
+	if (window->renderer == NULL) {
 		log_error("[SDL2] - Unable to create Renderer: %s", SDL_GetError());
 		goto ERROR;
 	}
 
+	window->time.previous = time_get();
 	return window;
 
 ERROR:
@@ -50,5 +57,11 @@ void window_destroy(Window *window) {
 
 	SDL_DestroyRenderer(window->renderer);
 	SDL_DestroyWindow(window->handler);
+	SDL_Quit();
+
 	free(window);
+}
+
+double time_get(void) {
+	return (double)SDL_GetTicks64() / 1000.0;
 }

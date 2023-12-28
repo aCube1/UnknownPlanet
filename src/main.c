@@ -1,6 +1,8 @@
+#include "core/render.h"
 #include "core/window.h"
 #include "log.h"
 
+#include <SDL_events.h>
 #include <stdlib.h>
 
 #define DEFAULT_WIDTH  960
@@ -17,6 +19,23 @@ int main(void) {
 	if (window == NULL) {
 		log_fatal("Unable to initialize Engine");
 		return EXIT_FAILURE;
+	}
+
+	bool running = true;
+	while (running) {
+		SDL_Event events;
+		while (SDL_PollEvent(&events) > 0) {
+			/* Just check if the window needs to be close */
+			switch (events.type) {
+			case SDL_QUIT:
+				running = false;
+				break;
+			}
+		}
+
+		render_begin(window);
+		/* Render things here */
+		render_end(window);
 	}
 
 	window_destroy(window);

@@ -20,11 +20,13 @@ target_compile_features(
 target_sources(
 	${PROJECT_NAME}
 	PRIVATE
+		include/core/render.h
 		include/core/window.h
 		include/common.h
 		include/log.h
 		include/types.h
 
+		src/core/render.c
 		src/core/window.c
 		src/common.c
 		src/log.c
