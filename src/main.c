@@ -1,4 +1,3 @@
-#include "core/render.h"
 #include "core/window.h"
 #include "log.h"
 
@@ -33,9 +32,9 @@ int main(void) {
 			}
 		}
 
-		render_begin(window);
+		window_clear(window);
 		/* Render things here */
-		render_end(window);
+		window_present(window);
 	}
 
 	window_destroy(window);

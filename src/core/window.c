@@ -1,6 +1,7 @@
 #include "core/window.h"
 
 #include "common.h"
+#include "core/utils.h"
 #include "log.h"
 
 #include <SDL2/SDL.h>
@@ -42,7 +43,7 @@ Window *window_create(const char *title, const VideoMode *mode) {
 		goto ERROR;
 	}
 
-	window->time.previous = time_get();
+	window->time.previous = get_time();
 	return window;
 
 ERROR:
@@ -62,6 +63,47 @@ void window_destroy(Window *window) {
 	free(window);
 }
 
-double time_get(void) {
-	return (double)SDL_GetTicks64() / 1000.0;
+void window_clear(Window *window) {
+	if (window == NULL) {
+		return;
+	}
+
+	/* Meansure how many time the frame take to update */
+	window->time.current = get_time();
+	window->time.update = window->time.current - window->time.previous;
+	window->time.previous = window->time.current;
+
+	SDL_SetRenderDrawColor(window->renderer, 0, 0, 0, 255);
+	SDL_RenderClear(window->renderer);
+	SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
+}
+
+void window_present(Window *window) {
+	if (window == NULL) {
+		return;
+	}
+
+	SDL_RenderPresent(window->renderer);
+
+	/* Meansure how many time the frame take to render */
+	window->time.current = get_time();
+	window->time.render = window->time.current - window->time.previous;
+	window->time.previous = window->time.current;
+
+	/* Get frame delta time */
+	window->time.frame = window->time.update + window->time.render;
+
+	/* Wait for some milliseconds... */
+	if (window->time.frame < window->time.target) {
+		wait_time(window->time.target - window->time.frame);
+
+		window->time.current = get_time();
+		double wait = window->time.current - window->time.previous;
+		window->time.previous = window->time.current;
+
+		window->time.frame += wait;
+	}
+
+	/* Increment FPS counter */
+	window->time.frame_counter += 1;
 }

@@ -5,8 +5,6 @@
 
 #include <stdio.h>
 
-double get_time(void);
-
 void *xcalloc(usize count, usize size);
 void *xrealloc(void *ptr, usize size);
 
