@@ -20,6 +20,8 @@ int main(void) {
 		return EXIT_FAILURE;
 	}
 
+	window_set_targetfps(window, 60);
+
 	bool running = true;
 	while (running) {
 		SDL_Event events;
@@ -31,6 +33,8 @@ int main(void) {
 				break;
 			}
 		}
+
+		log_trace("%i -> %f", window_get_fps(window), window->time.frame);
 
 		window_clear(window);
 		/* Render things here */
