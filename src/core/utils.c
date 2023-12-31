@@ -1,16 +1,15 @@
 #include "core/utils.h"
 
-#include "types.h"
+#include "config.h"
 
 #include <SDL_timer.h>
 #include <time.h>
 
-#ifdef __linux__
+#ifdef OS_UNIX
 #	include <unistd.h>
-#endif
-#ifdef _WIN32
-/* NOTE: Declare Sleep() funtion to avoid including 'window.h'
- * (kernel32.lib linkage required) */
+#elif defined(OS_WINDOWS)
+/* NOTE: Declare Sleep() funtion to avoid including 'window.h'.
+ * 'kernel32.lib' linkage required. */
 __declspec(dllimport) void __stdcall Sleep(u64 msTimeOut);
 #endif
 
@@ -19,13 +18,13 @@ double get_time(void) {
 }
 
 void wait_time(double seconds) {
-	/* TODO: Implement busy wait loop to prevent granularity on Sleep() */
+	double dest_time = get_time() + seconds;
 
-#ifdef _WIN32
+#ifdef OS_WINDOWS
 	Sleep((u64)(seconds * 1000.0));
 #endif
 
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
+#if OS_UNIX
 	time_t sec = (time_t)seconds;
 	time_t nsec = ((time_t)seconds - sec) * 1000000000L;
 	struct timespec req = {
@@ -35,4 +34,7 @@ void wait_time(double seconds) {
 
 	while (nanosleep(&req, &req) == -1) {}
 #endif
+
+	/* To prevent granularity, we run a wait loop */
+	while (get_time() < dest_time) {}
 }
