@@ -1,0 +1,3 @@
+[submodule "vendor/cglm"]
+	path = vendor/cglm
+	url = git@github.com:recp/cglm.git

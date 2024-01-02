@@ -20,14 +20,19 @@ target_compile_features(
 target_sources(
 	${PROJECT_NAME}
 	PRIVATE
-		include/core/utils.h
-		include/core/window.h
+		include/core/gfx/opengl.h
+		include/core/sdl/window.h
+		include/core/time.h
+		include/core/video.h
 		include/common.h
+		include/config.h
 		include/log.h
 		include/types.h
 
-		src/core/utils.c
-		src/core/window.c
+		src/core/gfx/opengl.c
+		src/core/sdl/window.c
+		src/core/time.c
+		src/core/video.c
 		src/common.c
 		src/log.c
 		src/main.c

@@ -1,4 +1,4 @@
-#include "core/window.h"
+#include "core/video.h"
 #include "log.h"
 
 #include <SDL_events.h>
@@ -6,21 +6,20 @@
 
 #define DEFAULT_WIDTH  960
 #define DEFAULT_HEIGHT 540
+#define DEFAULT_FPS    60
 
 int main(void) {
 	VideoMode mode = {
 		.width = DEFAULT_WIDTH,
 		.height = DEFAULT_HEIGHT,
-		.flags = 0,
+		.fps = 1.0 / DEFAULT_FPS,
 	};
 
-	Window *window = window_create("Unknown Planet", &mode);
-	if (window == NULL) {
+	Video *video = video_init("Unknown Planet", &mode);
+	if (video == NULL) {
 		log_fatal("Unable to initialize Engine");
 		return EXIT_FAILURE;
 	}
-
-	window_set_targetfps(window, 60);
 
 	bool running = true;
 	while (running) {
@@ -34,13 +33,13 @@ int main(void) {
 			}
 		}
 
-		log_trace("%i -> %f", window_get_fps(window), window->time.frame);
+		log_trace("%i -> %f", time_getfps(&video->time), video->time.frame);
 
-		window_clear(window);
+		video_clear(video);
 		/* Render things here */
-		window_present(window);
+		video_present(video);
 	}
 
-	window_destroy(window);
+	video_quit(video);
 	return EXIT_SUCCESS;
 }

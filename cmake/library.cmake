@@ -10,9 +10,14 @@ function(set_libraries target)
 		REQUIRED
 	)
 
+	add_subdirectory(${VENDOR_DIR}/glad)
+	add_subdirectory(${VENDOR_DIR}/cglm)
+
 	target_link_libraries(
 		${target}
 		PRIVATE
+			cglm
+			glad
 			SDL2::SDL2
 )
 endfunction()
