@@ -1,7 +1,7 @@
-#include "core/video.h"
+#include "core/engine.h"
+#include "core/gfx/render.h"
 #include "log.h"
 
-#include <SDL_events.h>
 #include <stdlib.h>
 
 #define DEFAULT_WIDTH  960
@@ -15,31 +15,18 @@ int main(void) {
 		.fps = 1.0 / DEFAULT_FPS,
 	};
 
-	Video *video = video_init("Unknown Planet", &mode);
-	if (video == NULL) {
+	Engine *engine = engine_init("Unknown Planet", &mode);
+	if (engine == NULL) {
 		log_fatal("Unable to initialize Engine");
 		return EXIT_FAILURE;
 	}
 
-	bool running = true;
-	while (running) {
-		SDL_Event events;
-		while (SDL_PollEvent(&events) > 0) {
-			/* Just check if the window needs to be close */
-			switch (events.type) {
-			case SDL_QUIT:
-				running = false;
-				break;
-			}
-		}
-
-		log_trace("%i -> %f", time_getfps(&video->time), video->time.frame);
-
-		video_clear(video);
+	while (engine->is_running) {
+		render_begin(engine);
 		/* Render things here */
-		video_present(video);
+		render_end(engine);
 	}
 
-	video_quit(video);
+	engine_quit(engine);
 	return EXIT_SUCCESS;
 }

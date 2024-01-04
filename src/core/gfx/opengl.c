@@ -30,3 +30,7 @@ void gl_clear_color(const Color *color) {
 void gl_clear_buffers(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
+
+void gl_viewport(s32 x, s32 y, s32 width, s32 height) {
+	glViewport(x, y, width, height);
+}

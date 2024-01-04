@@ -17,11 +17,4 @@ typedef int64_t s64;
 
 typedef size_t usize;
 
-typedef struct Color {
-	u8 r; /* Red (0 - 255) */
-	u8 g; /* Green (0 - 255) */
-	u8 b; /* Blue (0 - 255) */
-	u8 a; /* Alpha (0 - 255) */
-} Color;
-
 #endif /* _TYPES_H_ */

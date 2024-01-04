@@ -21,18 +21,18 @@ target_sources(
 	${PROJECT_NAME}
 	PRIVATE
 		include/core/gfx/opengl.h
-		include/core/sdl/window.h
-		include/core/time.h
-		include/core/video.h
+		include/core/gfx/render.h
+		include/core/glfw/window.h
+		include/core/engine.h
 		include/common.h
 		include/config.h
 		include/log.h
 		include/types.h
 
 		src/core/gfx/opengl.c
-		src/core/sdl/window.c
-		src/core/time.c
-		src/core/video.c
+		src/core/gfx/render.c
+		src/core/glfw/window.c
+		src/core/engine.c
 		src/common.c
 		src/log.c
 		src/main.c
